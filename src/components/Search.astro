@@ -1,0 +1,55 @@
+---
+/** Renders Pagefind UI block. Requires postbuild: pagefind --source dist */
+const { placeholder = 'Search posts…' } = Astro.props;
+---
+
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+<div id="search" class="my-6 max-w-md mx-auto" />
+<script src="/pagefind/pagefind-ui.js" defer></script>
+<script define:vars={{ placeholder }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    new PagefindUI({
+      element: '#search',
+      showSubResults: true,
+      showImages: true,
+      translations: {
+        search_placeholder: { default: placeholder }
+      }
+    });
+  });
+</script>
+
+<style>
+  /* Custom Pagefind UI styling for dark theme */
+  :global(.pagefind-ui) {
+    --pagefind-ui-scale: 1;
+    --pagefind-ui-primary: #ffffff;
+    --pagefind-ui-text: #e4e4e7;
+    --pagefind-ui-background: #18181b;
+    --pagefind-ui-border: #3f3f46;
+    --pagefind-ui-tag: #27272a;
+  }
+  
+  :global(.pagefind-ui__search-input) {
+    background-color: #27272a;
+    border-color: #3f3f46;
+    color: #ffffff;
+  }
+  
+  :global(.pagefind-ui__search-input:focus) {
+    border-color: #71717a;
+    outline: none;
+  }
+  
+  :global(.pagefind-ui__result) {
+    border-color: #3f3f46;
+  }
+  
+  :global(.pagefind-ui__result-link) {
+    color: #ffffff;
+  }
+  
+  :global(.pagefind-ui__result-link:hover) {
+    color: #d4d4d8;
+  }
+</style>

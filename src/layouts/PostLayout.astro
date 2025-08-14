@@ -1,0 +1,144 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Giscus from '@/components/Giscus.astro';
+import { type CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, heroImage } = post.data;
+
+// Calculate reading time (rough estimate)
+const wordsPerMinute = 200;
+const textContent = post.body;
+const words = textContent.split(/\s+/).length;
+const readingTime = Math.ceil(words / wordsPerMinute);
+
+// Format dates
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+};
+---
+
+<BaseLayout title={title} description={description} image={heroImage}>
+  <article class="prose prose-invert prose-zinc max-w-none">
+    <!-- Post Header -->
+    <header class="mb-8 not-prose">
+      <h1 class="text-4xl font-bold text-white mb-4">{title}</h1>
+      
+      <div class="flex flex-wrap items-center gap-4 text-sm text-zinc-400 mb-4">
+        <time datetime={pubDate.toISOString()}>
+          {formatDate(pubDate)}
+        </time>
+        
+        {updatedDate && (
+          <span>
+            Updated: <time datetime={updatedDate.toISOString()}>
+              {formatDate(updatedDate)}
+            </time>
+          </span>
+        )}
+        
+        <span>{readingTime} min read</span>
+      </div>
+      
+      {tags && tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mb-6">
+          {tags.map((tag) => (
+            <span class="inline-block bg-zinc-800 text-zinc-300 text-xs px-2 py-1 rounded hover:bg-zinc-700 transition-colors">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
+      
+      {heroImage && (
+        <img 
+          src={heroImage} 
+          alt={title}
+          class="w-full h-64 object-cover rounded-lg mb-6"
+          loading="eager"
+        />
+      )}
+    </header>
+    
+    <!-- Post Content -->
+    <div class="prose-content">
+      <slot />
+    </div>
+  </article>
+  
+  <!-- Post Navigation -->
+  <nav class="mt-12 pt-8 border-t border-zinc-800" aria-label="Post navigation">
+    <div class="flex justify-between items-center">
+      <a 
+        href="/blog" 
+        class="text-zinc-400 hover:text-white transition-colors duration-200 flex items-center gap-2"
+      >
+        ← Back to Blog
+      </a>
+      
+      <a 
+        href="#top" 
+        class="text-zinc-400 hover:text-white transition-colors duration-200 flex items-center gap-2"
+      >
+        Back to Top ↑
+      </a>
+    </div>
+  </nav>
+  
+  <!-- Comments Section -->
+  <section class="mt-12">
+    <h2 class="text-2xl font-semibold text-white mb-6">Comments</h2>
+    <Giscus />
+  </section>
+</BaseLayout>
+
+<style>
+  /* Custom prose styling for better readability */
+  .prose-content :global(h2) {
+    @apply text-2xl font-semibold text-white mt-8 mb-4;
+  }
+  
+  .prose-content :global(h3) {
+    @apply text-xl font-semibold text-white mt-6 mb-3;
+  }
+  
+  .prose-content :global(p) {
+    @apply text-zinc-300 leading-relaxed mb-4;
+  }
+  
+  .prose-content :global(a) {
+    @apply text-blue-400 hover:text-blue-300 underline transition-colors;
+  }
+  
+  .prose-content :global(code) {
+    @apply bg-zinc-800 text-zinc-300 px-1 py-0.5 rounded text-sm;
+  }
+  
+  .prose-content :global(pre) {
+    @apply bg-zinc-800 border border-zinc-700 rounded-lg p-4 overflow-x-auto;
+  }
+  
+  .prose-content :global(pre code) {
+    @apply bg-transparent p-0;
+  }
+  
+  .prose-content :global(blockquote) {
+    @apply border-l-4 border-zinc-600 pl-4 italic text-zinc-400;
+  }
+  
+  .prose-content :global(ul, ol) {
+    @apply text-zinc-300 mb-4;
+  }
+  
+  .prose-content :global(li) {
+    @apply mb-1;
+  }
+</style>

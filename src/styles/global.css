@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+body {
+  @apply bg-zinc-900 text-white;
+}
+
+/* Typography improvements */
+.prose {
+  @apply prose-invert prose-zinc;
+}
+
+/* Custom component styles */
+.post-card {
+  @apply bg-zinc-800 border border-zinc-700 rounded-lg p-6 hover:bg-zinc-750 transition-colors;
+}
+
+.search-container {
+  @apply max-w-md mx-auto;
+}
+
+/* Pagefind UI customizations */
+.pagefind-ui {
+  @apply text-zinc-300;
+}
+
+.pagefind-ui__search-input {
+  @apply bg-zinc-800 border-zinc-700 text-white;
+}
+
+.pagefind-ui__result {
+  @apply border-zinc-700;
+}
+
+.pagefind-ui__result-link {
+  @apply text-white hover:text-zinc-300;
+}

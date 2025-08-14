@@ -1,0 +1,21 @@
+---
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/about', label: 'About' }
+];
+---
+
+<header class="mx-auto max-w-3xl px-4 py-8">
+  <a href="/" class="text-xl font-semibold hover:text-zinc-300 transition-colors">My Astro Blog</a>
+  <nav class="mt-2 space-x-4 text-sm text-zinc-400">
+    {nav.map(n => (
+      <a 
+        href={n.href} 
+        class="hover:text-white transition-colors duration-200"
+      >
+        {n.label}
+      </a>
+    ))}
+  </nav>
+</header>

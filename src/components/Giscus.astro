@@ -1,0 +1,45 @@
+---
+// Giscus configuration - update these values with your repository details
+const {
+  repo = "yourname/yourrepo",
+  repoId = "REPO_ID_HERE",
+  category = "General",
+  categoryId = "CATEGORY_ID_HERE",
+  mapping = "pathname",
+  strict = "0",
+  reactionsEnabled = "1",
+  emitMetadata = "0",
+  inputPosition = "bottom",
+  theme = "dark",
+  lang = "en"
+} = Astro.props;
+---
+
+<div class="giscus-container mt-8 pt-8 border-t border-zinc-800">
+  <script
+    src="https://giscus.app/client.js"
+    data-repo={repo}
+    data-repo-id={repoId}
+    data-category={category}
+    data-category-id={categoryId}
+    data-mapping={mapping}
+    data-strict={strict}
+    data-reactions-enabled={reactionsEnabled}
+    data-emit-metadata={emitMetadata}
+    data-input-position={inputPosition}
+    data-theme={theme}
+    data-lang={lang}
+    crossorigin="anonymous"
+    async
+  ></script>
+</div>
+
+<style>
+  .giscus-container {
+    /* Ensure Giscus iframe matches our dark theme */
+  }
+  
+  :global(.giscus-frame) {
+    width: 100%;
+  }
+</style>
