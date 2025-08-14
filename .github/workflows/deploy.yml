@@ -86,4 +86,4 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: 'my-astro-blog'
           directory: dist
-          gitHubToken: ${{ secrets.
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
